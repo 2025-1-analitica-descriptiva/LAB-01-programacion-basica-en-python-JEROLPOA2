@@ -7,22 +7,17 @@ utilizar pandas, numpy o scipy.
 
 
 def pregunta_06():
-    """
-    La columna 5 codifica un diccionario donde cada cadena de tres letras
-    corresponde a una clave y el valor despues del caracter `:` corresponde al
-    valor asociado a la clave. Por cada clave, obtenga el valor asociado mas
-    pequeño y el valor asociado mas grande computados sobre todo el archivo.
+    min_max = {}
+    with open("files/input/data.csv") as f:
+        for line in f:
+            col5 = line.strip().split("\t")[4]
+            for par in col5.split(","):
+                clave, valor = par.split(":")
+                valor = int(valor)
+                if clave not in min_max:
+                    min_max[clave] = [valor, valor]
+                else:
+                    min_max[clave][0] = min(min_max[clave][0], valor)
+                    min_max[clave][1] = max(min_max[clave][1], valor)
+    return sorted((k, v[0], v[1]) for k, v in min_max.items())
 
-    Rta/
-    [('aaa', 1, 9),
-     ('bbb', 1, 9),
-     ('ccc', 1, 10),
-     ('ddd', 0, 9),
-     ('eee', 1, 7),
-     ('fff', 0, 9),
-     ('ggg', 3, 10),
-     ('hhh', 0, 9),
-     ('iii', 0, 9),
-     ('jjj', 5, 17)]
-
-    """
